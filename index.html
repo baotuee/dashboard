@@ -107,31 +107,9 @@ th.sactive{background:#0f1424;}
 .badge-grn{background:#d1fae5;color:#065f46;padding:1px 5px;border-radius:8px;font-size:7.5px;font-weight:700;}
 .footer{text-align:center;padding:7px;font-size:7.5px;color:#bbb;margin-top:4px;}
 .note{font-size:7.5px;color:#aaa;margin-top:4px;}
-body.auth-locked{background:#111827;min-height:100vh;display:flex;align-items:center;justify-content:center;}
-body.auth-locked .page{display:none;}
-.auth-screen{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#111827,#1f2937 52%,#0f766e);z-index:9999;padding:24px;}
-.auth-card{width:min(360px,100%);background:#fff;border-radius:8px;padding:24px;box-shadow:0 24px 60px rgba(0,0,0,.28);}
-.auth-card h2{font-size:20px;color:#111827;margin-bottom:6px;}
-.auth-card p{font-size:12px;color:#6b7280;margin-bottom:16px;line-height:1.4;}
-.auth-card label{display:block;font-size:10px;color:#374151;font-weight:700;text-transform:uppercase;margin-bottom:6px;}
-.auth-card input{width:100%;border:1px solid #d1d5db;border-radius:6px;padding:10px 12px;font-size:14px;margin-bottom:12px;}
-.auth-card button{width:100%;border:0;border-radius:6px;background:#0f766e;color:#fff;font-size:13px;font-weight:800;padding:10px 12px;cursor:pointer;}
-.auth-card button:hover{background:#115e59;}
-.auth-error{min-height:16px;margin-top:10px;color:#dc2626;font-size:11px;font-weight:700;}
-body:not(.auth-locked) .auth-screen{display:none;}
 </style>
 </head>
-<body class="auth-locked">
-<div class="auth-screen" id="authScreen">
-  <form class="auth-card" id="authForm">
-    <h2>CPD Dashboard</h2>
-    <p>Nhập mật khẩu để xem Ads Performance Dashboard.</p>
-    <label for="authPassword">Password</label>
-    <input type="password" id="authPassword" autocomplete="current-password" autofocus>
-    <button type="submit">Vào dashboard</button>
-    <div class="auth-error" id="authError"></div>
-  </form>
-</div>
+<body>
 <div class="page">
 
 <div class="hdr">
