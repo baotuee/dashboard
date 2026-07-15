@@ -26,6 +26,16 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f2f5;color:#1a1f36;fo
 .kpi .lb{font-size:8.5px;color:#888;font-weight:700;text-transform:uppercase;letter-spacing:.3px;}
 .kpi .vl{font-size:18px;font-weight:800;color:#1a1f36;line-height:1.2;margin:1px 0;}
 .kpi .s1,.kpi .s2{font-size:8.5px;color:#aaa;}
+.kpi .vl.up{color:#22c55e;}
+.kpi .vl.dn{color:#ef4444;}
+.kpi .vl.neu{color:#f59e0b;}
+/* 3 KPI trụ cột: NMV Total · Spend Ads · TACOS NMV */
+.kpi.hl{background:#1a1f36;box-shadow:0 2px 8px rgba(26,31,54,.35);position:relative;overflow:hidden;}
+.kpi.hl::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:#f59e0b;}
+.kpi.hl .lb{color:#fcd34d;}
+.kpi.hl .vl{color:#fff;font-size:22px;}
+.kpi.hl .s1,.kpi.hl .s2{color:#94a3b8;}
+.kpi.hl .s1 strong,.kpi.hl .s2 strong{color:#e2e8f0;}
 .up{color:#22c55e;font-weight:700;}
 .dn{color:#ef4444;font-weight:700;}
 .neu{color:#f59e0b;font-weight:700;}
@@ -38,6 +48,15 @@ tr.tot td:first-child{text-align:left;}
 .wk-table tr:nth-child(7n) td{border-bottom:2px solid #e5e7eb;}
 .wk-table th{text-align:right;}
 .wk-table th:first-child,.wk-table th:nth-child(2){text-align:left;}
+#bmBar{background:#f8fafc;border:1px solid #e2e8f0;border-radius:5px;padding:4px 10px;margin-bottom:7px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:9px;}
+#bmList{display:flex;gap:5px;align-items:center;flex-wrap:wrap;}
+.bmchip{display:inline-flex;align-items:center;gap:3px;background:#e2e8f0;color:#1e293b;padding:2px 6px;border-radius:10px;font-size:8.5px;font-weight:600;}
+.bmchip.def{background:#1a1f36;color:#fff;}
+.bmchip .star{cursor:pointer;color:#f59e0b;font-size:10px;line-height:1;}
+.bmchip .x{cursor:pointer;color:#ef4444;font-weight:800;}
+#bmName{border:1px solid #ddd;border-radius:3px;padding:2px 7px;font-size:9px;font-family:inherit;width:150px;}
+.bmbtn{border:none;background:#1a1f36;color:#fff;border-radius:3px;padding:3px 9px;font-size:8.5px;font-weight:700;cursor:pointer;}
+.bmbtn:hover{background:#0f1424;}
 #cfBar{background:#fff7ed;border:1px solid #fed7aa;border-radius:5px;padding:5px 10px;margin-bottom:7px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:9px;}
 .cfchip{background:#1a1f36;color:#fff;padding:2px 8px;border-radius:10px;font-size:8.5px;font-weight:600;cursor:pointer;display:inline-flex;gap:5px;align-items:center;}
 .cfchip .x{color:#f87171;font-weight:800;}
@@ -47,6 +66,9 @@ tr.tot td:first-child{text-align:left;}
 .lmtm td{padding:2px 4px;}
 .lmtm td:nth-child(8),.lmtm th:nth-child(8){border-left:2px solid #94a3b8;}
 .lmtm td:nth-child(15),.lmtm th:nth-child(15){border-left:2px solid #94a3b8;}
+.picchip{display:inline-block;padding:2px 9px;border-radius:10px;color:#fff;font-weight:700;font-size:8px;cursor:pointer;white-space:nowrap;letter-spacing:.2px;}
+.picchip:hover{filter:brightness(1.15);}
+.picchip.on{box-shadow:0 0 0 2px #1a1f36,0 0 0 4px #fde68a;}
 tr.clk{cursor:pointer;}
 tr.cfsel{background:#fde68a !important;box-shadow:inset 3px 0 0 #f59e0b;}
 tr.cfsel:hover{background:#fcd34d !important;}
@@ -55,6 +77,12 @@ tr.cfsel:hover{background:#fcd34d !important;}
 .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:7px;}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:7px;}
 .g21{display:grid;grid-template-columns:2fr 1fr;gap:6px;margin-bottom:7px;}
+.g211{display:grid;grid-template-columns:2fr 1fr 1fr;gap:6px;margin-bottom:7px;}
+#pieLeg{margin-top:5px;display:flex;flex-direction:column;gap:2px;}
+#pieLeg .pl{display:flex;align-items:center;gap:5px;font-size:8px;padding:1px 2px;border-radius:2px;}
+#pieLeg .pl:hover{background:#f3f4f6;}
+#pieLeg .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+#pieLeg .pl b{margin-left:auto;}
 .full{margin-bottom:7px;}
 .cw{position:relative;height:105px;}
 .cwl{position:relative;height:200px;}
@@ -107,16 +135,29 @@ th.sactive{background:#0f1424;}
   <div class="fi" style="margin-left:auto;"><label>&nbsp;</label><span style="font-size:8px;color:#aaa;">Click 1 dòng bảng (Product/Creator/Angle/Tier) để cross-filter toàn dashboard · click lại để bỏ</span></div>
 </div>
 
+<div id="bmBar">
+  <span style="font-weight:700;color:#475569;">🔖 Bookmark</span>
+  <span id="bmList"></span>
+  <input id="bmName" placeholder="Đặt tên view hiện tại…" maxlength="28">
+  <button class="bmbtn" onclick="bmAdd()">＋ Lưu filter hiện tại</button>
+  <span style="color:#bbb;font-size:7.5px;margin-left:auto;">☆ = đặt làm mặc định (tự áp khi mở file) · lưu trong trình duyệt này</span>
+</div>
+
 <div id="cfBar" style="display:none;"></div>
 
 <div class="kpi-row" id="kpiRow"></div>
 
-<div class="g2">
+<div class="g211">
   <div class="card">
     <div class="ct">📊 ROI &amp; TACOS Total theo Brand &nbsp;·&nbsp; <span id="roiNote" style="text-transform:none;color:#999;font-weight:400;"></span></div>
     <table id="tblRoi"></table>
   </div>
-  <div class="card"><div class="ct">ROI &amp; TACOS Total by Date</div><div class="cwl"><canvas id="cRoi"></canvas></div></div>
+  <div class="card">
+    <div class="ct">NMV contribute by Brand</div>
+    <div style="position:relative;height:150px;"><canvas id="cPie"></canvas></div>
+    <div id="pieLeg"></div>
+  </div>
+  <div class="card"><div class="ct">NMV Total &amp; TACOS Total by Date</div><div class="cwl"><canvas id="cRoi"></canvas></div></div>
 </div>
 
 <div class="full card tgt-card">
@@ -395,6 +436,11 @@ function entityGroup(cube,month,off,entityCol){
 }
 
 // ---- Target by Brand & PIC (per month; follows month tab) ----
+const PICCLR={'Lê Thị Nhật Linh':'#2563eb','Trương Bảo Tuệ':'#ea580c','Phan Chí Linh':'#16a34a','Trần Hoàng Anh':'#7c3aed'};
+function picChip(b){
+  const c=PICCLR[b.pic]||'#64748b', on=cf.shop===b.shop?' on':'';
+  return `<span class="picchip${on}" style="background:${c};" onclick="toggleCf('shop',${b.shop})" title="Click để lọc toàn dashboard theo PIC này">${esc(b.pic)}</span>`;
+}
 const brandTargets=[
   {code:'OAP', pic:'Lê Thị Nhật Linh', match:'oreal',     t:{'2026-06':{nmvT:1141679918,adsT:131293190},'2026-07':{nmvT:1141679918,adsT:119876391}}},
   {code:'MNY', pic:'Trương Bảo Tuệ',   match:'maybelline', t:{'2026-06':{nmvT:2173040369,adsT:249899642},'2026-07':{nmvT:1965483595,adsT:228169239}}},
@@ -431,7 +477,7 @@ function buildTargetTable(tblId,noteId,mode){
     T.nmvT+=nmvT;T.adsT+=adsT;T.nmvA+=nmvA;T.adsA+=adsA;
     const pn=nmvA/nmvT, pa=adsA/adsT, tacT=adsT/nmvT, tacA=adsA/nmvA, ptac=tacT/tacA;
     const ref=(mode==='mtd')?pace:1, tacR=tacA/tacT;
-    h+=`<tr><td>${D.shops[b.shop]}</td><td>${b.pic}</td><td>${fInt(nmvT)}</td><td>${fInt(nmvA)}</td><td style="${gradAround(pn,ref,0.10)}">${fPct(pn,1)}</td><td>${fInt(adsT)}</td><td>${fInt(adsA)}</td><td style="${gradAround(pa,ref,0.10)}">${fPct(pa,1)}</td><td>${fPct(tacT,1)}</td><td>${fPct(tacA,1)}</td><td style="${gradAround(ptac,1,0.10)}">${fPct(ptac,1)}</td>`
+    h+=`<tr><td>${D.shops[b.shop]}</td><td>${picChip(b)}</td><td>${fInt(nmvT)}</td><td>${fInt(nmvA)}</td><td style="${gradAround(pn,ref,0.10)}">${fPct(pn,1)}</td><td>${fInt(adsT)}</td><td>${fInt(adsA)}</td><td style="${gradAround(pa,ref,0.10)}">${fPct(pa,1)}</td><td>${fPct(tacT,1)}</td><td>${fPct(tacA,1)}</td><td style="${gradAround(ptac,1,0.10)}">${fPct(ptac,1)}</td>`
       + (mode==='runrate'?`<td style="${bandStyle(tacBand(tacR))}">${fPct(tacR,1)}</td>`+actCell(pn,tacR):'') + `</tr>`;
   });
   const pnT=T.nmvA/T.nmvT, paT=T.adsA/T.adsT, tacTT=T.adsT/T.nmvT, tacAT=T.adsA/T.nmvA, ptacT=tacTT/tacAT;
@@ -545,6 +591,25 @@ function buildLmTm(tblId,dimCol,dimArr,exclDim,dimLabel){
   if(tblId==='tblLmShop') $('lmtmNote').textContent='Nguồn Raw_Ads · click dòng để cross-filter · %MoM = (T7 − T6)/T6 (Ads Cost & %Ads Cost: giảm = xanh)';
 }
 
+// ---- NMV contribute by Brand (pie) ----
+const PIECLR=['#1a3a4a','#f97316','#64748b','#22c55e','#a855f7','#3b82f6'];
+function buildPie(){
+  const rws=V.byShop.filter(r=>inSel(r[0])&&passF(r[1],r[2],r[3]));
+  const m={}; rws.forEach(r=>{ m[r[1]]=(m[r[1]]||0)+r[6]; });
+  const es=Object.entries(m).filter(e=>e[1]>0).sort((a,b)=>b[1]-a[1]);
+  const tot=es.reduce((s,e)=>s+e[1],0);
+  mk('cPie',{type:'pie',
+    data:{labels:es.map(e=>D.shops[e[0]]),datasets:[{data:es.map(e=>e[1]),
+      backgroundColor:es.map((e,i)=>PIECLR[i%PIECLR.length]),borderWidth:1,borderColor:'#fff'}]},
+    options:{plugins:{legend:{display:false},tooltip:{callbacks:{
+      label:c=>c.label+': '+fC(c.parsed)+' ('+(tot?(c.parsed/tot*100).toFixed(2):0)+'%)'}}},
+      responsive:true,maintainAspectRatio:false,animation:false}});
+  $('pieLeg').innerHTML=es.map((e,i)=>
+    `<div class="pl" onclick="toggleCf('shop',${e[0]})" title="Click để cross-filter" style="cursor:pointer;${cf.shop===+e[0]?'background:#fde68a;font-weight:800;':''}">`
+    +`<span class="dot" style="background:${PIECLR[i%PIECLR.length]}"></span>${esc(D.shops[e[0]])}`
+    +`<b>${fC(e[1])}</b><span style="color:#888;">(${tot?(e[1]/tot*100).toFixed(2):0}%)</span></div>`).join('');
+}
+
 // ---- ROI & TACOS Total overview block ----
 function buildRoi(){
   const rws=V.byShop.filter(r=>inSel(r[0])&&passF(r[1],r[2],r[3]));
@@ -564,9 +629,9 @@ function buildRoi(){
   const bd={}; dts.forEach(d=>bd[d]={nmv:0,cost:0});
   rws.forEach(r=>{ bd[r[0]].nmv+=r[6]; bd[r[0]].cost+=r[7]; });
   mk('cRoi',{data:{labels:dts.map(dLbl),datasets:[
-    {type:'bar',label:'ROI (NMV Total/Spend)',data:dts.map(d=>bd[d].cost?bd[d].nmv/bd[d].cost:null),backgroundColor:'#bfdbfe',yAxisID:'y'},
+    {type:'bar',label:'NMV Total',data:dts.map(d=>bd[d].nmv),backgroundColor:'#bfdbfe',yAxisID:'y'},
     {type:'line',label:'TACOS Total %',data:dts.map(d=>bd[d].nmv?bd[d].cost/bd[d].nmv*100:null),borderColor:'#f59e0b',borderWidth:2,pointRadius:1.5,tension:.4,yAxisID:'y1'}
-  ]},options:lineOpts(v=>v.toFixed(0),v=>v.toFixed(0)+'%')});
+  ]},options:lineOpts(v=>fC(v),v=>v.toFixed(0)+'%')});
 }
 
 function render(){
@@ -582,17 +647,28 @@ function render(){
 
   const ctr=A.clk/A.imp, cvr=A.conv/A.clk, cpm=A.cost/A.imp*1000, cpc=A.cost/A.clk, cpo=A.cost/A.conv;
   const roas=A.nmvAds/A.cost, tacos=A.cost/A.nmv, acos=A.cost/A.nmvAds, pctAds=A.nmvAds/A.nmv;
+  // ---- pace / target / run-rate cho KPI ----
+  const mSelMonths=selMonths();
+  let elapsedT=0,totalT=0; mSelMonths.forEach(m=>{ elapsedT+=elapsedDays(m); totalT+=monthDays[m]; });
+  const pace=totalT?elapsedT/totalT:0;
+  const perLbl=mSelMonths.length>1?'T6+T7':(mSelMonths[0]==='2026-06'?'T6':'T7');
+  let tgtNmv=0; brandTargets.forEach(b=>{ if(shV()==='All'||b.shop==+shV()) mSelMonths.forEach(m=>{ if(b.t[m]) tgtNmv+=b.t[m].nmvT; }); });
+  let rrNmv=0; mSelMonths.forEach(m=>{ const s=sumRows(dateRows(m),MO); rrNmv+=s.nmv*(monthDays[m]/Math.max(1,elapsedDays(m))); });
+  const loading=tgtNmv?A.nmv/tgtNmv:null, rrPct=tgtNmv?rrNmv/tgtNmv:null;
   const kpis=[
-    {lb:'NMV Total',vl:fC(A.nmv),s1:'Orders: <strong>'+fInt(A.o)+'</strong>',s2:Ab?('%vs LM: '+momHtml(A.nmv,Ab.nmv)):''},
+    {hl:1,lb:'NMV Total',vl:fC(A.nmv),s1:'Orders: <strong>'+fInt(A.o)+'</strong>',s2:Ab?('%vs LM: '+momHtml(A.nmv,Ab.nmv)):''},
     {lb:'NMV Ads',vl:fC(A.nmvAds),s1:'%NMV from ads: <strong>'+fPct(pctAds,1)+'</strong>',s2:Ab?('%vs LM: '+momHtml(A.nmvAds,Ab.nmvAds)):''},
-    {lb:'Spend Ads',vl:fC(A.cost),s1:'CPO: <strong>'+fInt(cpo)+'</strong>',s2:Ab?('%vs LM: '+momHtml(A.cost,Ab.cost,true)):''},
-    {lb:'ROAS NMV',vl:fR(roas),s1:'ACOS: <strong>'+fPct(acos,1)+'</strong>',s2:Ab?('%vs LM: '+momHtml(roas,Ab.nmvAds/Ab.cost)):''},
-    {lb:'TACOS NMV',vl:fPct(tacos,2),s1:'Spend / NMV Total',s2:Ab?('%vs LM: '+momHtml(tacos,Ab.cost/Ab.nmv,true)):''},
-    {lb:'Orders Ads',vl:fInt(A.conv),s1:'CVR: <strong>'+fPct(cvr,2)+'</strong>',s2:Ab?('%vs LM: '+momHtml(A.conv,Ab.conv)):''},
-    {lb:'CTR',vl:fPct(ctr,2),s1:'CPC: <strong>'+fInt(cpc)+'</strong>',s2:Ab?('%vs LM: '+momHtml(ctr,Ab.clk/Ab.imp)):''},
-    {lb:'CPM',vl:fInt(cpm),s1:'Impressions: <strong>'+fC(A.imp)+'</strong>',s2:Ab?('%vs LM: '+momHtml(cpm,Ab.cost/Ab.imp*1000,true)):''}
+    {hl:1,lb:'Spend Ads',vl:fC(A.cost),s1:'CPO: <strong>'+fInt(cpo)+'</strong>',s2:Ab?('%vs LM: '+momHtml(A.cost,Ab.cost,true)):''},
+    {lb:'ACOS NMV',vl:fPct(acos,2),s1:'Spend Ads / NMV Ads',s2:Ab?('%vs LM: '+momHtml(acos,Ab.cost/Ab.nmvAds,true)):''},
+    {hl:1,lb:'TACOS NMV',vl:fPct(tacos,2),s1:'Spend / NMV Total',s2:Ab?('%vs LM: '+momHtml(tacos,Ab.cost/Ab.nmv,true)):''},
+    {lb:'%Loading '+perLbl,vl:fPct(loading,1),vc:(loading==null?'':(loading>=pace?'up':(loading>=pace*0.75?'neu':'dn'))),
+      s1:'NMV / Target '+perLbl,s2:'Pace kỳ: <strong>'+fPct(pace,1)+'</strong>'},
+    {lb:'%Run-rate',vl:fPct(rrPct,1),vc:color10(rrPct),
+      s1:'Dự phóng NMV cả kỳ',s2:'RR NMV: <strong>'+fC(rrNmv)+'</strong>'},
+    {lb:'CPM',vl:fInt(cpm),s1:'CTR: <strong>'+fPct(ctr,2)+'</strong> · CVR: <strong>'+fPct(cvr,2)+'</strong>',
+      s2:'CPC: <strong>'+fInt(cpc)+'</strong> · Impr: <strong>'+fC(A.imp)+'</strong>'}
   ];
-  $('kpiRow').innerHTML=kpis.map(k=>`<div class="kpi"><div class="lb">${k.lb}</div><div class="vl">${k.vl}</div><div class="s1">${k.s1}</div><div class="s2">${k.s2}</div></div>`).join('');
+  $('kpiRow').innerHTML=kpis.map(k=>`<div class="kpi${k.hl?' hl':''}"><div class="lb">${k.lb}</div><div class="vl ${k.vc||''}">${k.vl}</div><div class="s1">${k.s1}</div><div class="s2">${k.s2}</div></div>`).join('');
 
   // group by date
   const dates=[...new Set(rows.map(r=>r[0]))].sort();
@@ -746,13 +822,57 @@ function render(){
   $('tblMonth').innerHTML=h;
 
   buildRoi();
+  buildPie();
   buildTarget();
   buildLmTm('tblLmShop',1,D.shops,'shop','Shop');
   buildLmTm('tblLmType',2,D.types,'type','Type of Content');
   buildWeeks();
   ['tblRoi','tblTarget','tblRunrate','tblDate','tblAngle','tblProduct','tblCreator','tblTier','tblMonth'].forEach(makeSortable);
 }
-render();
+// ================= BOOKMARK (localStorage) =================
+const BMKEY='cpd_bm_v1';
+function bmLoad(){ try{ return JSON.parse(localStorage.getItem(BMKEY))||{list:[],def:null}; }catch(e){ return {list:[],def:null}; } }
+function bmStore(o){ try{ localStorage.setItem(BMKEY,JSON.stringify(o)); }catch(e){ alert('Trình duyệt chặn lưu localStorage nên không lưu được bookmark.'); } }
+function stateGet(){ return {m:mSel,f:cFrom,t:cTo,
+  sh:$('fShop').value,ty:$('fType').value,tr:$('fTier').value,
+  cf:JSON.parse(JSON.stringify(cf)), s:JSON.parse(JSON.stringify(sortState))}; }
+function stateSet(s){
+  mSel=s.m||'All'; cFrom=s.f||null; cTo=s.t||null;
+  $('dFrom').value=cFrom||''; $('dTo').value=cTo||'';
+  $('fShop').value=s.sh||'All'; $('fType').value=s.ty||'All'; $('fTier').value=s.tr||'All';
+  for(const k in cf) delete cf[k]; if(s.cf) for(const k in s.cf) cf[k]=s.cf[k];
+  for(const k in sortState) delete sortState[k]; if(s.s) for(const k in s.s) sortState[k]=s.s[k];
+  render();
+}
+function bmAdd(){
+  const n=($('bmName').value||'').trim();
+  if(!n){ alert('Nhập tên cho bookmark trước đã.'); return; }
+  const o=bmLoad(); const i=o.list.findIndex(x=>x.name===n);
+  const e={name:n,state:stateGet()};
+  if(i>=0) o.list[i]=e; else o.list.push(e);
+  bmStore(o); $('bmName').value=''; bmRender();
+}
+function bmApply(i){ const o=bmLoad(); if(o.list[i]) stateSet(o.list[i].state); }
+function bmDel(i){ const o=bmLoad(); const n=o.list[i]?o.list[i].name:null;
+  o.list.splice(i,1); if(o.def===n) o.def=null; bmStore(o); bmRender(); }
+function bmDef(i){ const o=bmLoad(); const n=o.list[i]?o.list[i].name:null;
+  o.def=(o.def===n?null:n); bmStore(o); bmRender(); }
+function bmRender(){
+  const o=bmLoad();
+  $('bmList').innerHTML = o.list.length ? o.list.map((e,i)=>
+      `<span class="bmchip${o.def===e.name?' def':''}">`
+      +`<span class="star" onclick="bmDef(${i})" title="Đặt/bỏ mặc định">${o.def===e.name?'★':'☆'}</span>`
+      +`<span onclick="bmApply(${i})" style="cursor:pointer;" title="Áp dụng view này">${esc(e.name)}</span>`
+      +`<span class="x" onclick="bmDel(${i})" title="Xoá bookmark">✕</span></span>`).join('')
+    : '<span style="color:#bbb;font-size:8px;">Chưa có — chọn filter rồi đặt tên và bấm Lưu</span>';
+}
+
+bmRender();
+(function bootstrap(){
+  const o=bmLoad();
+  if(o.def){ const e=o.list.find(x=>x.name===o.def); if(e){ stateSet(e.state); return; } }
+  render();
+})();
 </script>
 </body>
 </html>
